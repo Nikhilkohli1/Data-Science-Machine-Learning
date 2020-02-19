@@ -1,5 +1,10 @@
 
-To run the notebook and load the dataset, follow the below instructions - 
+# Forest Cover Type Prediction
+
+# Abstract
+The main aim of this Project is to predict the Forest Cover type for Roosevelt National Forest. Initial Exploratory data analysis is done to check the relationship between Independent variables & dependent variable(Cover_Type). The dataset after converting categorical variables to features which can be fed into a predictive model, has 54 features many of which does not have a direct relationship with the target variable. Therefore, Feature selection techniques and Significance tests are performed to get the most importance & significant features. Classification techniques such as KNN, Random Forest, logistic are used to build a predictive model. Kfold Cross-Validation & Grid Search is used to generalize the model better on the data it has not seen and tune the hyperparameters to get the best prediction. A final model was build using the most important features in a bagging algorithm and achieved an accuracy of 96% on testing data with Cross Validation.
+
+To run the project and load the dataset, follow the below instructions - 
 
 1. Download the dataset from - https://www.kaggle.com/uciml/forest-cover-type-dataset
 
