@@ -4,6 +4,9 @@
 I have implemented the Frozen Lake game using Q learning. 
 You can find more information about the game here - https://gym.openai.com/envs/FrozenLake-v0/
 
+![Frozen Lake](https://github.com/Nikhilkohli1/Data-Science-Machine-Learning/blob/master/Frozen%20Lake%20Q%20Learning/Frozen-Lake.png)
+
+
 The agent controls the movement of a character in a grid world. Some tiles of the grid are walkable, and others lead to the agent falling into the water. Additionally, the movement direction of the agent is uncertain and only partially depends on the chosen direction. The agent is rewarded for finding a walkable path to a goal tile.
 
 The episode ends when you reach the goal or fall in a hole. You receive a reward of 1 if you reach the goal, and zero otherwise.
