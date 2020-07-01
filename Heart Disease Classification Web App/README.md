@@ -1,6 +1,6 @@
 # Heart-Disease-Prediction
 
-[!https://github.com/Nikhilkohli1/Data-Science-Machine-Learning/blob/master/Heart%20Disease%20Classification%20Web%20App/Data/beat.jpg]
+[!Image](https://github.com/Nikhilkohli1/Data-Science-Machine-Learning/blob/master/Heart%20Disease%20Classification%20Web%20App/Data/beat.jpg)
 
 
 ### Dataset - 
