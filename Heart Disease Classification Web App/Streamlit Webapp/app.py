@@ -11,7 +11,7 @@ from subprocess import call
 
 
 st.title('Heart Disease Diagnosis Assistant')
-st.markdown('This application is meant to assist doctors in diagnosing, if a patient has a **_Heart_ _Disease_ _or_ not** using few details about their health')
+st.markdown('This application is meant to **_assist_ _doctors_ _in_ diagnosing**, if a patient has a **_Heart_ _Disease_ _or_ not** using few details about their health')
 
 st.markdown('Please **Enter _the_ _below_ details** to know the results -')
 
@@ -39,7 +39,7 @@ thalach = st.slider('Maximum Heart Rate Achieved (Thalach)', 0, 250, 100)
 exang_ls = ['Yes', 'No']
 exang = st.selectbox('Exercise Induced Angina', exang_ls)
 
-oldpeak = st.text_input(label= 'Oldpeak: ST Depression induced by exercise relative to rest (0-6)')
+oldpeak = st.text_input(label= 'Oldpeak: ST Depression induced by exercise relative to rest (0-6)', 2.2)
 
 slope_ls = ['Unslopping: Better heart rate with exercise', 'Flatsloping: Minimal change', 'Downslopings: Signs of unhealthy heart']
 slope = st.selectbox('Slope of Peak exercise ST Segment', slope_ls)
@@ -85,7 +85,7 @@ if st.button('Check Diagnosis'):
             ensemble_pred = f.read()    
         st.header('The patient {}'.format(str(ensemble_pred)))
     except:
-        st.header('Please provide all the values & within the range')
+        st.header('Please provide all the input values & within range')
 
 st.text('\n')
 st.text('\n')
