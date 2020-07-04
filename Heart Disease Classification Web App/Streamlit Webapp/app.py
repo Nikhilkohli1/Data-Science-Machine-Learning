@@ -5,13 +5,14 @@ import pickle
 import time
 import os
 from sklearn.externals import joblib 
+from features_utils import *
+from pipeline import *
+from subprocess import call
 
 
 st.title('Heart Disease Diagnosis Assistant')
 st.markdown('This application is meant to assist doctors in diagnosing, if a patient has a **_Heart_ _Disease_ _or_ not** using few details about their health')
 
-model = joblib.load('./SVMClassifier.pkl')  
-  
 st.markdown('Please **Enter _the_ _below_ details** to know the results -')
 
 age = st.text_input(label='Age')
@@ -22,9 +23,9 @@ sex = st.selectbox('Gender', gender_ls)
 cp_ls = ['Typical Angina', 'Atypical Angina', 'Non-anginal pain', 'Asymptomatic']
 cp = st.selectbox('Chest pain Type', cp_ls)
 
-restbp = st.slider('Resting Blood Pressure', 0, 220, 130)
+restbp = st.slider('Resting Blood Pressure', 0, 220, 120)
 
-chol = st.slider('Serum Cholestoral in mg/dl', 0, 600, 246)
+chol = st.slider('Serum Cholestoral in mg/dl', 0, 600, 150)
 
 fbs_ls = ['fasting blood sugar > 120 mg/dl', 'fasting blood sugar < 120 mg/dl']
 fbs = st.selectbox('Fasting Blood Sugar (>126 mg/dL signals diabetes)', fbs_ls)
@@ -38,7 +39,7 @@ thalach = st.slider('Maximum Heart Rate Achieved (Thalach)', 0, 250, 100)
 exang_ls = ['Yes', 'No']
 exang = st.selectbox('Exercise Induced Angina', exang_ls)
 
-oldpeak = st.text_input(label= 'Oldpeak: ST Depression induced by exercise relative to rest')
+oldpeak = st.text_input(label= 'Oldpeak: ST Depression induced by exercise relative to rest (0-6)')
 
 slope_ls = ['Unslopping: Better heart rate with exercise', 'Flatsloping: Minimal change', 'Downslopings: Signs of unhealthy heart']
 slope = st.selectbox('Slope of Peak exercise ST Segment', slope_ls)
@@ -49,11 +50,57 @@ ca = st.selectbox('Number of Major vessels colored by flourosopy', ca_ls)
 thal_ls = ['Normal:1', 'Normal:3', 'Fixed defect:6', 'Reversable defect:7']
 thal = st.selectbox('Thalium Stress result', thal_ls)
 
-pred = ''
-pred = model.predict([[0,1,1,1,1,1,1,1,1,1,1, 0]])
+
+ensemble_pred = ''
 
 if st.button('Check Diagnosis'):
-    with st.spinner('Running the Diagnostic.. '):
-        time.sleep(2)
-    st.header('The patient {}'.format(str(pred)))
 
+    if os.path.exists('inputData.csv'):
+        os.remove('inputData.csv')
+
+    if os.path.exists('featuresDP.csv'):
+        os.remove('featuresDP.csv')
+
+    if os.path.exists('featuresFE.csv'):
+        os.remove('featuresFE.csv')
+
+    if os.path.exists('prediction.txt'):
+        os.remove('prediction.txt')
+
+
+    with st.spinner('Running the Diagnostic.. '):
+        #create input dataframe to send as input to Luigi Pipeline
+        df_pred = pd.DataFrame([[age, sex, cp, restbp, chol, fbs, 
+                        restecg, thalach, exang, oldpeak, slope, ca, thal]], 
+                       columns= original_cols)
+        df_pred.to_csv('./inputData.csv')
+
+        #ensemble_pred = os.system(pipeline.py)
+        #luigi.run()
+        call("python pipeline.py PredictEnsemble --local-scheduler", shell=True)
+        
+    try:
+            
+        with open('prediction.txt', 'r') as f:
+            ensemble_pred = f.read()    
+        st.header('The patient {}'.format(str(ensemble_pred)))
+    except:
+        st.header('Please provide all the values & within the range')
+
+st.text('\n')
+st.text('\n')
+st.text('\n')
+st.text('\n')
+st.text('\n')
+st.text('\n')
+st.text('\n')
+st.text('\n')
+
+
+
+
+st.markdown('This Application Uses an **_Ensemble_ _of_ _3_ models(SVM, Logistic, Random Forest for Prediction)**')
+st.markdown('**App Framework** - **Streamlit**')
+st.markdown('**Inference Pipeline** - **Luigi**')
+st.markdown('**Developed by** - Nikhil Kohli')
+st.markdown('**www.linkedin.com/in/nikhilkohli92**')
