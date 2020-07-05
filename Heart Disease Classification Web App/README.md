@@ -1,13 +1,7 @@
 # Heart-Disease-Prediction
 
-![Img](https://github.com/Nikhilkohli1/Data-Science-Machine-Learning/blob/master/Heart%20Disease%20Classification%20Web%20App/Data/beat.jpg)
-
-
-
-### Check out the web app below - 
-
+### Check out the Streamlit web app below - 
 https://heart-disease-diagnostics.herokuapp.com/
-
 ![Heart Disease Diagnosis Assistant Demo](Data/Demo.gif)
 
 
@@ -30,6 +24,10 @@ https://heart-disease-diagnostics.herokuapp.com/
     - above 200 is cause for concern
 6. ***fbs - (fasting blood sugar > 120 mg/dl)*** (1 = true; 0 = false)56
     - '>126' mg/dL signals diabetes
+    
+    ![Img](https://github.com/Nikhilkohli1/Data-Science-Machine-Learning/blob/master/Heart%20Disease%20Classification%20Web%20App/Data/beat.jpg)
+
+
 7. ***restecg - resting electrocardiographic results***
     - 0: Nothing to note
     - 1: ST-T Wave abnormality
