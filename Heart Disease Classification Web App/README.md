@@ -2,6 +2,7 @@
 
 ### Check out the Streamlit web app below - 
 https://heart-disease-diagnostics.herokuapp.com/
+
 ![Heart Disease Diagnosis Assistant Demo](Data/Demo.gif)
 
 
