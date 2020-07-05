@@ -3,8 +3,10 @@ import numpy as np
 import pandas as pd
 import pickle
 import statistics
+import streamlit as st
 import os
-from sklearn.externals import joblib 
+#from sklearn.externals import joblib 
+#import joblib
 from features_utils import *
 
 #os.chdir('N:/GITHUB/Data-Science-Machine-Learning/Heart Disease Classification Web App/Streamlit Webapp')
@@ -76,32 +78,31 @@ class PredictEnsemble(luigi.Task):
     def run(self):
         features_SS = pd.read_csv(FeatureEngineering().output().path,  index_col=[0])
         #selecting features for each of 3 models
-        features_SVM = features_SS[selected_features]
+        features_RF = features_SS[original_features]
         features_Logit = features_SS[selected_features]
-        features_rf = features_SS[original_features]
+        features_knn = features_SS[original_features]
         
         # load models from directory 
-        svm = joblib.load('./Models/SVMClassifier.pkl')  
-        logit = joblib.load('./Models/LogisticRegression.pkl')  
-        rf = joblib.load('./Models/RandomForestClf.pkl')
+        rf = pickle.load(open('./Models/RandomForestclf.pkl', 'rb'))
+        logit = pickle.load(open('./Models/LogisticRegression.pkl', 'rb'))
+        knn = pickle.load(open('./Models/KNNClassifier.pkl', 'rb'))
         
-        pred_svm = svm.predict(features_SVM)
+        pred_rf = rf.predict(features_RF)
         pred_logit = logit.predict(features_Logit)
-        pred_rf = rf.predict(features_rf)
+        pred_knn = knn.predict(features_knn)
         #Ensemble Max Voting Prediction
-        print('SVM :' ,pred_svm)
+        print('RF :' ,pred_rf)
         print('logit :', pred_logit)
-        print('rf :', pred_rf)
-        ensemble_pred = statistics.mode([int(pred_svm), int(pred_logit), int(pred_rf)])
+        print('knn :', pred_knn)
+        ensemble_pred = statistics.mode([int(pred_logit), int(pred_knn), int(pred_rf)])
         ensemble_diagnostic = ''
         if ensemble_pred == 0:
             ensemble_diagnostic = 'does not have a Heart Disease'
         else:
             ensemble_diagnostic = 'might have a Heart Disease. Please perform further tests.'
-
         with self.output().open('w') as pred_file:
             pred_file.write(ensemble_diagnostic)
-
+        
         
 if __name__ == '__main__':
     luigi.run()

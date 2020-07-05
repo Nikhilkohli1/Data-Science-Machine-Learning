@@ -4,10 +4,11 @@ import pandas as pd
 import pickle
 import time
 import os
-from sklearn.externals import joblib 
+#from sklearn.externals import joblib 
 from features_utils import *
 from pipeline import *
 from subprocess import call
+#import joblib
 
 
 st.title('Heart Disease Diagnosis Assistant')
@@ -39,7 +40,7 @@ thalach = st.slider('Maximum Heart Rate Achieved (Thalach)', 0, 250, 100)
 exang_ls = ['Yes', 'No']
 exang = st.selectbox('Exercise Induced Angina', exang_ls)
 
-oldpeak = st.text_input(label= 'Oldpeak: ST Depression induced by exercise relative to rest (0-6)', 2.2)
+oldpeak = st.text_input(label= 'Oldpeak: ST Depression induced by exercise relative to rest (0-6)')
 
 slope_ls = ['Unslopping: Better heart rate with exercise', 'Flatsloping: Minimal change', 'Downslopings: Signs of unhealthy heart']
 slope = st.selectbox('Slope of Peak exercise ST Segment', slope_ls)
@@ -56,15 +57,19 @@ ensemble_pred = ''
 if st.button('Check Diagnosis'):
 
     if os.path.exists('inputData.csv'):
+        #st.text('yes it exists 1')
         os.remove('inputData.csv')
 
     if os.path.exists('featuresDP.csv'):
+        #st.text('yes it exists 2')
         os.remove('featuresDP.csv')
 
     if os.path.exists('featuresFE.csv'):
+        #st.text('yes it exists 3')
         os.remove('featuresFE.csv')
 
     if os.path.exists('prediction.txt'):
+        #st.text('yes it exists 4')
         os.remove('prediction.txt')
 
 
@@ -77,15 +82,23 @@ if st.button('Check Diagnosis'):
 
         #ensemble_pred = os.system(pipeline.py)
         #luigi.run()
+    try:
         call("python pipeline.py PredictEnsemble --local-scheduler", shell=True)
+    except Exception as e:
+        st.text(e)
+
         
     try:
             
         with open('prediction.txt', 'r') as f:
             ensemble_pred = f.read()    
         st.header('The patient {}'.format(str(ensemble_pred)))
-    except:
+    except Exception as e:
         st.header('Please provide all the input values & within range')
+        #st.text(e)
+
+    #f = open('pred.txt', 'r')
+    #st.text(str(f.read()))
 
 st.text('\n')
 st.text('\n')
@@ -99,7 +112,7 @@ st.text('\n')
 
 
 
-st.markdown('This Application Uses an **_Ensemble_ _of_ _3_ models(SVM, Logistic, Random Forest for Prediction)**')
+st.markdown('This Application Uses an **_Ensemble_ _of_ _3_ models(KNN, Logistic, Random Forest for Prediction)**')
 st.markdown('**App Framework** - **Streamlit**')
 st.markdown('**Inference Pipeline** - **Luigi**')
 st.markdown('**Developed by** - Nikhil Kohli')

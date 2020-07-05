@@ -1,11 +1,11 @@
 FROM continuumio/anaconda3:4.4.0
 MAINTAINER Nikhil Kohli
 
-COPY . /Streamlit Webapp
+COPY ./ /usr/local/python
 
 EXPOSE 8501
 
-WORKDIR /Streamlit Webapp
+WORKDIR /usr/local/python
 
 RUN pip install -r requirements.txt
 
