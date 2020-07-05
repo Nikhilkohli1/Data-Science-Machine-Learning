@@ -2,6 +2,15 @@
 
 ![Img](https://github.com/Nikhilkohli1/Data-Science-Machine-Learning/blob/master/Heart%20Disease%20Classification%20Web%20App/Data/beat.jpg)
 
+
+
+### Check out the web app below - 
+
+https://heart-disease-diagnostics.herokuapp.com/
+
+![Heart Disease Diagnosis Assistant Demo](Data/Demo.gif)
+
+
 ## Problem Definition
 
 ***Given clinical parameters about a person, can we predict whether or not they have heart disease?***
@@ -55,6 +64,3 @@ I have further created a Ensemble max voting of the predictions from these 3 mod
 
 I have developed a ***Inference pipeline too using luigi and deployed the Model as a service using Streamlit & Docker on Heroku***. 
 
-### Check out the web app below - 
-
-https://heart-disease-diagnostics.herokuapp.com/
